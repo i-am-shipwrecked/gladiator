@@ -2,15 +2,25 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Berserk extends ApplicationAdapter {
-	SpriteBatch batch;
-	Texture img;
-	int screenWidth;
-	int screenHeight;
+	private SpriteBatch batch;
+	private Texture img;
+	private int screenWidth;
+	private int screenHeight;
+	private Stage stage;
+	private BerserkGame game; // Добавьте поле для хранения экземпляра BerserkGame
+
 
 	@Override
 	public void create() {
@@ -22,33 +32,66 @@ public class Berserk extends ApplicationAdapter {
 
 		img.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 		img.setWrap(Texture.TextureWrap.Repeat, Texture.TextureWrap.Repeat);
+
+		game = new BerserkGame();
+
+		// Создаем кнопку
+		Texture buttonTexture = new Texture("play.png");
+		TextureRegionDrawable buttonDrawable = new TextureRegionDrawable(new TextureRegion(buttonTexture));
+		ImageButton button = new ImageButton(buttonDrawable);
+
+		// Устанавливаем позицию кнопки
+		button.setPosition(screenWidth / 2 - button.getWidth() / 2, screenHeight / 2 - button.getHeight() / 2);
+
+		// Добавляем обработчик события нажатия на кнопку
+		button.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				// Очищаем текущую сцену (удаляем кнопку)
+				stage.clear();
+
+				// Создаем новый экран (сцену) для вашей игры и устанавливаем его в качестве текущего экрана
+				GameScreen gameScreen = new GameScreen(Berserk.this);
+				game.setScreen(gameScreen);
+			}
+		});
+
+		// Создаем сцену и добавляем кнопку
+		stage = new Stage();
+		stage.addActor(button);
+
+		// Устанавливаем сцене размеры экрана
+		stage.getViewport().update(screenWidth, screenHeight, true);
+
+		// Устанавливаем сцену как процессор ввода
+		Gdx.input.setInputProcessor(stage);
 	}
 
 	@Override
 	public void render() {
-		ScreenUtils.clear(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 		batch.begin();
 
-		// Рассчитываем позицию изображения, чтобы оно было внизу экрана
+		// Отрисовка изображения с фиксированными координатами
 		float x = 0;
 		float y = 0;
 
-		screenWidth = Gdx.graphics.getWidth();
-		screenHeight = Gdx.graphics.getHeight();
-
-		// Отрисовка изображения с фиксированными координатами
+		// Отрисовка изображения на всем экране
 		batch.draw(img, x, y, screenWidth, screenHeight);
 
 		batch.end();
+
+		// Обновление и отрисовка сцены для кнопки
+		stage.act();
+		stage.draw();
 	}
 
 	@Override
 	public void dispose() {
 		batch.dispose();
 		img.dispose();
+		stage.dispose(); // Не забудьте освободить ресурсы сцены
 	}
 }
-
-
-
-
