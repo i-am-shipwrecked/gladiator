@@ -36,9 +36,12 @@ public class Berserk extends ApplicationAdapter {
 		game = new BerserkGame();
 
 		// Создаем кнопку
-		Texture buttonTexture = new Texture("play.png");
-		TextureRegionDrawable buttonDrawable = new TextureRegionDrawable(new TextureRegion(buttonTexture));
-		ImageButton button = new ImageButton(buttonDrawable);
+		Texture normalTexture = new Texture("play.png"); // Обычное изображение
+		Texture hoverTexture = new Texture("play_hover.png"); // Изображение при наведении
+		TextureRegionDrawable normalDrawable = new TextureRegionDrawable(new TextureRegion(normalTexture));
+		TextureRegionDrawable hoverDrawable = new TextureRegionDrawable(new TextureRegion(hoverTexture));
+		ImageButton button = new ImageButton(normalDrawable, hoverDrawable);
+
 
 		// Устанавливаем позицию кнопки
 		button.setPosition(screenWidth / 2 - button.getWidth() / 2, screenHeight / 2 - button.getHeight() / 2);
