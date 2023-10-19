@@ -25,7 +25,7 @@ public class Berserk extends ApplicationAdapter {
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		img = new Texture("dungeon.png");
+		img = new Texture("arena.jpg");
 
 		screenWidth = Gdx.graphics.getWidth();
 		screenHeight = Gdx.graphics.getHeight();
