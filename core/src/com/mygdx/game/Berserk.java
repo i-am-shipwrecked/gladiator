@@ -1,7 +1,8 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,21 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 
-public class Berserk extends ApplicationAdapter {
+public class Berserk extends Game {
 	private SpriteBatch batch;
 	private Texture img;
 	private int screenWidth;
 	private int screenHeight;
 	private Stage stage;
-	private BerserkGame game; // Добавьте поле для хранения экземпляра BerserkGame
-
-	public SpriteBatch getBatch() {
-		return batch;
-	}
-
-	public Texture getImg() {
-		return img;
-	}
+	private BerserkGame game;
 
 	@Override
 	public void create() {
@@ -42,38 +35,16 @@ public class Berserk extends ApplicationAdapter {
 
 		game = new BerserkGame();
 
-		// Создаем кнопку
-		Texture normalTexture = new Texture("play.png"); // Обычное изображение
-		Texture hoverTexture = new Texture("play_hover.png"); // Изображение при наведении
+		Texture normalTexture = new Texture("play.png");
+		Texture hoverTexture = new Texture("play_hover.png");
 		TextureRegionDrawable normalDrawable = new TextureRegionDrawable(new TextureRegion(normalTexture));
 		TextureRegionDrawable hoverDrawable = new TextureRegionDrawable(new TextureRegion(hoverTexture));
 		ImageButton button = new ImageButton(normalDrawable, hoverDrawable);
-
-
-		// Устанавливаем позицию кнопки
 		button.setPosition(screenWidth / 2 - button.getWidth() / 2, screenHeight / 2 - button.getHeight() / 2);
 
-		// Добавляем обработчик события нажатия на кнопку
-		button.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				// Очищаем текущую сцену (удаляем кнопку)
-				stage.clear();
-
-				// Создаем новый экран (сцену) для вашей игры и устанавливаем его в качестве текущего экрана
-				GameScreen gameScreen = new GameScreen(Berserk.this);
-				game.setScreen(gameScreen);
-			}
-		});
-
-		// Создаем сцену и добавляем кнопку
 		stage = new Stage();
 		stage.addActor(button);
-
-		// Устанавливаем сцене размеры экрана
 		stage.getViewport().update(screenWidth, screenHeight, true);
-
-		// Устанавливаем сцену как процессор ввода
 		Gdx.input.setInputProcessor(stage);
 	}
 
@@ -83,17 +54,11 @@ public class Berserk extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
-
-		// Отрисовка изображения с фиксированными координатами
 		float x = 0;
 		float y = 0;
-
-		// Отрисовка изображения на всем экране
 		batch.draw(img, x, y, screenWidth, screenHeight);
-
 		batch.end();
 
-		// Обновление и отрисовка сцены для кнопки
 		stage.act();
 		stage.draw();
 	}
@@ -102,6 +67,7 @@ public class Berserk extends ApplicationAdapter {
 	public void dispose() {
 		batch.dispose();
 		img.dispose();
-		stage.dispose(); // Не забудьте освободить ресурсы сцены
+		stage.dispose();
 	}
 }
+

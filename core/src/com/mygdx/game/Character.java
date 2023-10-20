@@ -9,13 +9,14 @@ public class Character {
     private float x, y;
 
     public Character(float initialX, float initialY) {
-        characterTexture = new Texture("me.png"); // Замените на имя вашего файла изображения
+        characterTexture = new Texture("me.png"); // Проверьте путь к текстуре
         if (characterTexture == null) {
-            Gdx.app.error("Character", "Failed to load character texture.");
+            Gdx.app.log("Character", "Texture not loaded.");
         }
         x = initialX;
         y = initialY;
     }
+
 
     public void draw(SpriteBatch batch) {
         batch.draw(characterTexture, x, y);
