@@ -21,6 +21,13 @@ public class Berserk extends ApplicationAdapter {
 	private Stage stage;
 	private BerserkGame game; // Добавьте поле для хранения экземпляра BerserkGame
 
+	public SpriteBatch getBatch() {
+		return batch;
+	}
+
+	public Texture getImg() {
+		return img;
+	}
 
 	@Override
 	public void create() {
