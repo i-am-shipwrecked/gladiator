@@ -21,6 +21,8 @@ public class Berserk extends Game {
 	private int screenHeight;
 	private Stage stage;
 	private BerserkGame game;
+	private boolean buttonClicked;
+	private Character character;
 
 	@Override
 	public void create() {
@@ -46,11 +48,22 @@ public class Berserk extends Game {
 		stage.addActor(button);
 		stage.getViewport().update(screenWidth, screenHeight, true);
 		Gdx.input.setInputProcessor(stage);
+
+		// Добавление обработчика событий для кнопки изображения
+		button.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				buttonClicked = true;
+				character = new Character(100, 300);
+				System.out.println("Hello");
+			}
+		});
 	}
+
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1); // Очистка экрана черным цветом
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
@@ -61,13 +74,29 @@ public class Berserk extends Game {
 
 		stage.act();
 		stage.draw();
+
+		if (buttonClicked) {
+			Gdx.gl.glClearColor(0, 0, 0, 1);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+			batch.begin();
+			batch.draw(img, 0, 0, screenWidth, screenHeight);
+
+			// Отрисовка персонажа
+			character.render(batch);
+
+			batch.end();
+
+			// Добавьте вашу логику, которая выполняется после очистки экрана, здесь
+		}
 	}
+
 
 	@Override
 	public void dispose() {
 		batch.dispose();
+		character.dispose();
 		img.dispose();
 		stage.dispose();
 	}
 }
-
