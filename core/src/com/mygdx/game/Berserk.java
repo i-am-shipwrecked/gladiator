@@ -50,7 +50,6 @@ public class Berserk extends Game {
 		stage.getViewport().update(screenWidth, screenHeight, true);
 		Gdx.input.setInputProcessor(stage);
 
-		// Добавление обработчика событий для кнопки изображения
 		button.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -65,7 +64,7 @@ public class Berserk extends Game {
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0, 0, 0, 1); // Очистка экрана черным цветом
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		batch.begin();
@@ -84,14 +83,11 @@ public class Berserk extends Game {
 			batch.begin();
 			batch.draw(img, 0, 0, screenWidth, screenHeight);
 
-			// Отрисовка персонажа
 			character.render(batch);
 
 			character.moveTo(inputProcessor.getDirection());
 
 			batch.end();
-
-			// Добавьте вашу логику, которая выполняется после очистки экрана, здесь
 		}
 	}
 
