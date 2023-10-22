@@ -23,6 +23,7 @@ public class Berserk extends Game {
 	private BerserkGame game;
 	private boolean buttonClicked;
 	private Character character;
+	private KeybordAdapter inputProcessor = new KeybordAdapter();
 
 	@Override
 	public void create() {
@@ -55,7 +56,8 @@ public class Berserk extends Game {
 			public void clicked(InputEvent event, float x, float y) {
 				buttonClicked = true;
 				character = new Character(100, 300);
-				System.out.println("Hello");
+				Gdx.input.setInputProcessor(inputProcessor);
+				System.out.println("Main character is loaded");
 			}
 		});
 	}
@@ -84,6 +86,8 @@ public class Berserk extends Game {
 
 			// Отрисовка персонажа
 			character.render(batch);
+
+			character.moveTo(inputProcessor.getDirection());
 
 			batch.end();
 

@@ -24,5 +24,9 @@ public class Character extends Actor {
     public void dispose() {
         texture.dispose();
     }
+
+    public void moveTo(Vector2 direction) {
+        position.add(direction);
+    }
 }
 
