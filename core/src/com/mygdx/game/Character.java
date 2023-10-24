@@ -18,6 +18,10 @@ public class Character extends Actor {
     private float stateTime = 0; // Время для управления анимацией
     private Vector2 previousPosition = new Vector2();
 
+    private float animationTime = 0.0f;
+    private float animationDuration = 0.1f; // Измените это значение для замедления анимации
+    private boolean animationTriggered = false;
+
 
     public Character(float x, float y, float screenWidth, float screenHeight) {
         texture = new Texture("me.png");
@@ -30,13 +34,27 @@ public class Character extends Actor {
         Texture[] walkFrames = { texture, textureWalk1, textureWalk2 };
 
         // Установите длительность отображения каждого кадра
-        float frameDuration = 0.2f;
+        float frameDuration = -0.9f;
 
         // Создайте анимацию
         animation = new Animation<Texture>(frameDuration, walkFrames);
     }
 
+
     public void render(Batch batch) {
+        if (animationTriggered) {
+            animationTime += Gdx.graphics.getDeltaTime();
+            if (animationTime > animationDuration) {
+                animationTime = 0.0f;
+
+                // Переключитесь между текстурами анимации
+                if (texture == textureWalk1) {
+                    texture = textureWalk2;
+                } else {
+                    texture = textureWalk1;
+                }
+            }
+        }
         batch.draw(texture, position.x, position.y);
     }
 
@@ -45,20 +63,19 @@ public class Character extends Actor {
     }
 
     public void moveTo(Vector2 direction) {
-        previousPosition.set(position);
         float newX = position.x + direction.x;
         float newY = position.y + direction.y;
 
         // Проверьте, не выходит ли новая позиция за границы экрана
         if (newX >= 0 && newX + getWidth() <= screenWidth && newY >= 0 && newY + getHeight() <= screenHeight) {
-            position.add(direction);
-
-            // В зависимости от направления движения, переключите текстуру
-            // Обновите время для анимации
-            stateTime += Gdx.graphics.getDeltaTime();
-
-            // Получите текущую текстуру согласно анимации
-            texture = animation.getKeyFrame(stateTime, true);
+            if (position.x != newX || position.y != newY) {
+                // Позиция изменилась, включите анимацию
+                animationTriggered = true;
+            } else {
+                // Позиция осталась фиксированной, отключите анимацию
+                animationTriggered = false;
+            }
+            position.set(newX, newY);
         }
     }
 
