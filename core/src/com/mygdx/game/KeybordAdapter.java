@@ -10,6 +10,7 @@ public class KeybordAdapter extends InputAdapter {
     private boolean upPressed;
     private boolean downPressed;
 
+
     private final Vector2 direction = new Vector2();
 
     @Override
