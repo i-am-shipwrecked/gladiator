@@ -55,6 +55,7 @@ public class Berserk extends Game {
 			public void clicked(InputEvent event, float x, float y) {
 				buttonClicked = true;
 				character = new Character(0,0, 1100,100);
+
 				Gdx.input.setInputProcessor(inputProcessor);
 				System.out.println("Main character is loaded");
 			}
