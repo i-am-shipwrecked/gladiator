@@ -66,18 +66,20 @@ public class Character extends Actor {
         float newX = position.x + direction.x;
         float newY = position.y + direction.y;
 
-        // Проверьте, не выходит ли новая позиция за границы экрана
+        // Check if the new position is within the screen boundaries
         if (newX >= 0 && newX + getWidth() <= screenWidth && newY >= 0 && newY + getHeight() <= screenHeight) {
             if (position.x != newX || position.y != newY) {
-                // Позиция изменилась, включите анимацию
+                // Position has changed, enable animation
                 animationTriggered = true;
             } else {
-                // Позиция осталась фиксированной, отключите анимацию
+                // Position is fixed, disable animation and set texture to "me.png"
                 animationTriggered = false;
+                texture = new Texture("me.png"); // Set the texture to "me.png"
             }
             position.set(newX, newY);
         }
     }
+
 
 }
 
