@@ -25,10 +25,13 @@ public class Berserk extends Game {
 	private Character character;
 	private KeybordAdapter inputProcessor = new KeybordAdapter();
 
+	private Texture attackTexture;
+
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		img = new Texture("arena.jpg");
+		 // Загрузка текстуры
 
 		screenWidth = Gdx.graphics.getWidth();
 		screenHeight = Gdx.graphics.getHeight();
@@ -54,7 +57,7 @@ public class Berserk extends Game {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				buttonClicked = true;
-				character = new Character(0,0, 1100,100);
+				character = new Character(0,0, 1100,100, inputProcessor);
 
 				Gdx.input.setInputProcessor(inputProcessor);
 				System.out.println("Main character is loaded");

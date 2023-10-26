@@ -21,12 +21,17 @@ public class Character extends Actor {
     private float animationTime = 0.0f;
     private float animationDuration = 0.1f; // Измените это значение для замедления анимации
     private boolean animationTriggered = false;
+    private KeybordAdapter inputProcessor;
+    private Texture attackTexture;
 
 
-    public Character(float x, float y, float screenWidth, float screenHeight) {
+
+    public Character(float x, float y, float screenWidth, float screenHeight, KeybordAdapter inputProcessor) {
+        this.inputProcessor = inputProcessor;
         texture = new Texture("me.png");
         textureWalk1 = new Texture("me_walk1.png");
         textureWalk2 = new Texture("me_walk2.png");
+        attackTexture = new Texture("attack.png");
         this.position.set(x, y);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -47,7 +52,6 @@ public class Character extends Actor {
             if (animationTime > animationDuration) {
                 animationTime = 0.0f;
 
-                // Переключитесь между текстурами анимации
                 if (texture == textureWalk1) {
                     texture = textureWalk2;
                 } else {
@@ -55,8 +59,16 @@ public class Character extends Actor {
                 }
             }
         }
+
+        // Проверяем, нажата ли клавиша Enter, и меняем анимацию при необходимости
+        if (inputProcessor.isEnterPressed()) {
+            texture = attackTexture; // Используем заранее загруженную текстуру "attack.png"
+            System.out.println("attack");
+        }
+
         batch.draw(texture, position.x, position.y);
     }
+
 
     public void dispose() {
         texture.dispose();
@@ -79,6 +91,7 @@ public class Character extends Actor {
             position.set(newX, newY);
         }
     }
+
 
 
 }

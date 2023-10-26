@@ -9,36 +9,43 @@ public class KeybordAdapter extends InputAdapter {
     private boolean rightPressed;
     private boolean upPressed;
     private boolean downPressed;
-
+    private boolean enterPressed = false; // Добавлено поле для отслеживания клавиши Enter
 
     private final Vector2 direction = new Vector2();
 
     @Override
     public boolean keyDown(int keycode) {
-        if(keycode == Input.Keys.A) leftPressed = true;
-        if(keycode == Input.Keys.D) rightPressed = true;
-        if(keycode == Input.Keys.W) upPressed = true;
-        if(keycode == Input.Keys.S) downPressed = true;
+        if (keycode == Input.Keys.A) leftPressed = true;
+        if (keycode == Input.Keys.D) rightPressed = true;
+        if (keycode == Input.Keys.W) upPressed = true;
+        if (keycode == Input.Keys.S) downPressed = true;
+        if (keycode == Input.Keys.ENTER) enterPressed = true; // Устанавливаем флаг при нажатии клавиши Enter
 
         return false;
     }
 
     @Override
     public boolean keyUp(int keycode) {
-       if(keycode == Input.Keys.A) leftPressed = false;
-       if(keycode == Input.Keys.D) rightPressed = false;
-       if(keycode == Input.Keys.W) upPressed = false;
-       if(keycode == Input.Keys.S) downPressed = false;
+        if (keycode == Input.Keys.A) leftPressed = false;
+        if (keycode == Input.Keys.D) rightPressed = false;
+        if (keycode == Input.Keys.W) upPressed = false;
+        if (keycode == Input.Keys.S) downPressed = false;
+        if (keycode == Input.Keys.ENTER) enterPressed = false; // Сбрасываем флаг при отпускании клавиши Enter
 
-       return false;
+        return false;
     }
 
     public Vector2 getDirection() {
         direction.set(0, 0);
-        if(leftPressed) direction.add(-5, 0);
-        if(rightPressed) direction.add(5, 0);
-        if(upPressed) direction.add(0, 5);
-        if(downPressed) direction.add(0, -5);
+        if (leftPressed) direction.add(-5, 0);
+        if (rightPressed) direction.add(5, 0);
+        if (upPressed) direction.add(0, 5);
+        if (downPressed) direction.add(0, -5);
         return direction;
     }
+
+    public boolean isEnterPressed() {
+        return enterPressed;
+    }
 }
+
