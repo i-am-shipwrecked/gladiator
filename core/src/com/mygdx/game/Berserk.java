@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -32,6 +33,11 @@ public class Berserk extends Game {
 		batch = new SpriteBatch();
 		img = new Texture("arena.jpg");
 		 // Загрузка текстуры
+
+		Pixmap cursorPixmap = new Pixmap(Gdx.files.internal("cursor.png"));
+		Gdx.graphics.setCursor(Gdx.graphics.newCursor(cursorPixmap, 0, 0));
+		cursorPixmap.dispose(); // Освобождение памяти, после того как курсор установлен
+
 
 		screenWidth = Gdx.graphics.getWidth();
 		screenHeight = Gdx.graphics.getHeight();
