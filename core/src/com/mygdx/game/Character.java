@@ -23,6 +23,7 @@ public class Character extends Actor {
     private boolean animationTriggered = false;
     private KeybordAdapter inputProcessor;
     private Texture attackTexture;
+    private Texture healthTexture;
 
 
 
@@ -32,6 +33,7 @@ public class Character extends Actor {
         textureWalk1 = new Texture("me_walk1.png");
         textureWalk2 = new Texture("me_walk2.png");
         attackTexture = new Texture("attack.png");
+        healthTexture = new Texture("my_full_hp.png");
         this.position.set(x, y);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -66,8 +68,15 @@ public class Character extends Actor {
             System.out.println("attack");
         }
 
+        // Отрисовка персонажа
         batch.draw(texture, position.x, position.y);
+
+        // Отрисовка healthTexture (предполагается, что она должна быть рядом с персонажем)
+        float healthTextureX = 10; // Фиксированная позиция по X
+        float healthTextureY = 650; // Фиксированная позиция по Y
+        batch.draw(healthTexture, healthTextureX, healthTextureY);
     }
+
 
 
     public void dispose() {
