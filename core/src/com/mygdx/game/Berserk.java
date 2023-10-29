@@ -24,6 +24,7 @@ public class Berserk extends Game {
 	private BerserkGame game;
 	private boolean buttonClicked;
 	private Character character;
+	private EnemyCharacter enemyCharacter;
 	private KeybordAdapter inputProcessor = new KeybordAdapter();
 
 	private Texture attackTexture;
@@ -64,7 +65,7 @@ public class Berserk extends Game {
 			public void clicked(InputEvent event, float x, float y) {
 				buttonClicked = true;
 				character = new Character(0,0, 1100,100, inputProcessor);
-
+				enemyCharacter = new EnemyCharacter(1100, 0, 1100, 100);
 				Gdx.input.setInputProcessor(inputProcessor);
 				System.out.println("Main character is loaded");
 			}
@@ -87,14 +88,14 @@ public class Berserk extends Game {
 		stage.draw();
 
 		if (buttonClicked) {
+			enemyCharacter.act(Gdx.graphics.getDeltaTime());
 			Gdx.gl.glClearColor(0, 0, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 			batch.begin();
 			batch.draw(img, 0, 0, screenWidth, screenHeight);
-
+			enemyCharacter.render(batch);
 			character.render(batch);
-
 			character.moveTo(inputProcessor.getDirection());
 
 			batch.end();
@@ -105,6 +106,7 @@ public class Berserk extends Game {
 	@Override
 	public void dispose() {
 		batch.dispose();
+		enemyCharacter.dispose();
 		character.dispose();
 		img.dispose();
 		stage.dispose();
