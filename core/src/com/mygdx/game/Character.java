@@ -15,12 +15,12 @@ public class Character extends Actor {
     private Vector2 position = new Vector2();
     private float screenWidth;
     private float screenHeight;
-    private Animation<Texture> animation; // Поле для анимации
-    private float stateTime = 0; // Время для управления анимацией
+    private Animation<Texture> animation;
+    private float stateTime = 0;
     private Vector2 previousPosition = new Vector2();
 
     private float animationTime = 0.0f;
-    private float animationDuration = 0.1f; // Измените это значение для замедления анимации
+    private float animationDuration = 0.1f;
     private boolean animationTriggered = false;
     private KeybordAdapter inputProcessor;
     private Texture attackTexture;
@@ -39,10 +39,8 @@ public class Character extends Actor {
 
         Texture[] walkFrames = { texture, textureWalk1, textureWalk2 };
 
-        // Установите длительность отображения каждого кадра
         float frameDuration = -0.9f;
 
-        // Создайте анимацию
         animation = new Animation<Texture>(frameDuration, walkFrames);
     }
 
@@ -61,18 +59,15 @@ public class Character extends Actor {
             }
         }
 
-        // Проверяем, нажата ли клавиша Enter, и меняем анимацию при необходимости
         if (inputProcessor.isEnterPressed()) {
-            texture = attackTexture; // Используем заранее загруженную текстуру "attack.png"
+            texture = attackTexture;
             System.out.println("attack");
         }
 
-        // Отрисовка персонажа
         batch.draw(texture, position.x, position.y);
 
-        // Отрисовка healthTexture (предполагается, что она должна быть рядом с персонажем)
-        float healthTextureX = 10; // Фиксированная позиция по X
-        float healthTextureY = 650; // Фиксированная позиция по Y
+        float healthTextureX = 10;
+        float healthTextureY = 650;
         batch.draw(healthTexture, healthTextureX, healthTextureY);
     }
 
@@ -86,15 +81,12 @@ public class Character extends Actor {
         float newX = position.x + direction.x;
         float newY = position.y + direction.y;
 
-        // Check if the new position is within the screen boundaries
         if (newX >= 0 && newX + getWidth() <= screenWidth && newY >= 0 && newY + getHeight() <= screenHeight) {
             if (position.x != newX || position.y != newY) {
-                // Position has changed, enable animation
                 animationTriggered = true;
             } else {
-                // Position is fixed, disable animation and set texture to "me.png"
                 animationTriggered = false;
-                texture = new Texture("me.png"); // Set the texture to "me.png"
+                texture = new Texture("me.png");
             }
             position.set(newX, newY);
         }
