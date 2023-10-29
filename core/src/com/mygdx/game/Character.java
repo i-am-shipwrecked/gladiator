@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Character extends Actor {
     private Texture texture;
+    private Texture enemyTexture;
     private Texture textureWalk1;
     private Texture textureWalk2;
     private Vector2 position = new Vector2();
@@ -24,8 +25,6 @@ public class Character extends Actor {
     private KeybordAdapter inputProcessor;
     private Texture attackTexture;
     private Texture healthTexture;
-
-
 
     public Character(float x, float y, float screenWidth, float screenHeight, KeybordAdapter inputProcessor) {
         this.inputProcessor = inputProcessor;
@@ -100,9 +99,6 @@ public class Character extends Actor {
             position.set(newX, newY);
         }
     }
-
-
-
 }
 
 
