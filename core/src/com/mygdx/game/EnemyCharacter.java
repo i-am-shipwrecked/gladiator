@@ -1,33 +1,65 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class EnemyCharacter extends Actor {
     private Texture enemyTexture;
-    private Texture textureWalk1;
-    private Texture textureWalk2;
-    private Vector2 position = new Vector2();
     private float screenWidth;
     private float screenHeight;
+    private float moveSpeed = 100; // Скорость движения врага
     private Animation<Texture> animation;
-    private KeybordAdapter inputProcessor;
-    private Texture attackTexture;
-    private Texture healthTexture;
+    private float stateTime = 0;
+    private boolean movingRight = true;
 
     public EnemyCharacter(float x, float y, float screenWidth, float screenHeight) {
         enemyTexture = new Texture("enemy.png");
-        this.position.set(x, y);
+        setPosition(x, y);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
         System.out.println("Enemy is loaded");
+
+        Texture textureWalk1 = new Texture("enemy_walk.png");
+        Texture textureWalk2 = new Texture("enemy_walk_2.png");
+        Texture[] walkFrames = { textureWalk1, textureWalk2 };
+
+        // Установите длительность отображения каждого кадра
+        float frameDuration = 0.1f;
+
+        // Создайте анимацию
+        animation = new Animation<Texture>(frameDuration, walkFrames);
     }
 
     public void render(Batch batch) {
-        batch.draw(enemyTexture, position.x, position.y);
+        draw(batch, 1.0f);
+    }
+
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+
+        // Простая логика движения влево и вправо
+        float newX = getX() +(-moveSpeed) * delta;
+
+        // Проверяем, достиг ли враг границ экрана
+        if (newX < 0 || newX + getWidth() > screenWidth) {
+            // Меняем направление движения
+            movingRight = !movingRight;
+        }
+
+        setPosition(newX, getY());
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        stateTime += Gdx.graphics.getDeltaTime();
+        Texture currentFrame = animation.getKeyFrame(stateTime, true);
+        batch.draw(currentFrame, getX(), getY());
     }
 
     public void dispose() {
@@ -35,3 +67,18 @@ public class EnemyCharacter extends Actor {
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
