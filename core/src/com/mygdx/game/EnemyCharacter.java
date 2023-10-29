@@ -13,7 +13,7 @@ public class EnemyCharacter extends Actor {
     private Vector2 position = new Vector2();
     private float screenWidth;
     private float screenHeight;
-    private Animation<Texture> animation; // Поле для анимации;
+    private Animation<Texture> animation;
     private KeybordAdapter inputProcessor;
     private Texture attackTexture;
     private Texture healthTexture;

@@ -33,11 +33,10 @@ public class Berserk extends Game {
 	public void create() {
 		batch = new SpriteBatch();
 		img = new Texture("arena.jpg");
-		 // Загрузка текстуры
 
 		Pixmap cursorPixmap = new Pixmap(Gdx.files.internal("cursor.png"));
 		Gdx.graphics.setCursor(Gdx.graphics.newCursor(cursorPixmap, 0, 0));
-		cursorPixmap.dispose(); // Освобождение памяти, после того как курсор установлен
+		cursorPixmap.dispose();
 
 
 		screenWidth = Gdx.graphics.getWidth();
@@ -67,7 +66,7 @@ public class Berserk extends Game {
 				character = new Character(0,0, 1100,100, inputProcessor);
 				enemyCharacter = new EnemyCharacter(1100, 0, 1100, 100);
 				Gdx.input.setInputProcessor(inputProcessor);
-				System.out.println("Main character is loaded");
+				System.out.println("characters are loaded");
 			}
 		});
 	}

@@ -9,7 +9,7 @@ public class KeybordAdapter extends InputAdapter {
     private boolean rightPressed;
     private boolean upPressed;
     private boolean downPressed;
-    private boolean enterPressed = false; // Добавлено поле для отслеживания клавиши Enter
+    private boolean enterPressed = false;
 
     private final Vector2 direction = new Vector2();
 
@@ -19,7 +19,7 @@ public class KeybordAdapter extends InputAdapter {
         if (keycode == Input.Keys.D) rightPressed = true;
         if (keycode == Input.Keys.W) upPressed = true;
         if (keycode == Input.Keys.S) downPressed = true;
-        if (keycode == Input.Keys.ENTER) enterPressed = true; // Устанавливаем флаг при нажатии клавиши Enter
+        if (keycode == Input.Keys.ENTER) enterPressed = true;
 
         return false;
     }
@@ -30,7 +30,7 @@ public class KeybordAdapter extends InputAdapter {
         if (keycode == Input.Keys.D) rightPressed = false;
         if (keycode == Input.Keys.W) upPressed = false;
         if (keycode == Input.Keys.S) downPressed = false;
-        if (keycode == Input.Keys.ENTER) enterPressed = false; // Сбрасываем флаг при отпускании клавиши Enter
+        if (keycode == Input.Keys.ENTER) enterPressed = false;
 
         return false;
     }
