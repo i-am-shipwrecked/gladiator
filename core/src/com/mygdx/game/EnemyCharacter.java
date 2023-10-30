@@ -4,15 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class EnemyCharacter extends Actor {
     private Texture enemyTexture;
     private float screenWidth;
     private float screenHeight;
-    private float moveSpeed = 100; // Скорость движения врага
+    private float moveSpeed = 100;
     private Animation<Texture> animation;
     private float stateTime = 0;
     private boolean movingRight = true;
@@ -28,10 +26,8 @@ public class EnemyCharacter extends Actor {
         Texture textureWalk2 = new Texture("enemy_walk_2.png");
         Texture[] walkFrames = { textureWalk1, textureWalk2 };
 
-        // Установите длительность отображения каждого кадра
         float frameDuration = 0.1f;
 
-        // Создайте анимацию
         animation = new Animation<Texture>(frameDuration, walkFrames);
     }
 
@@ -43,12 +39,9 @@ public class EnemyCharacter extends Actor {
     public void act(float delta) {
         super.act(delta);
 
-        // Простая логика движения влево и вправо
         float newX = getX() +(-moveSpeed) * delta;
 
-        // Проверяем, достиг ли враг границ экрана
         if (newX < 0 || newX + getWidth() > screenWidth) {
-            // Меняем направление движения
             movingRight = !movingRight;
         }
 
