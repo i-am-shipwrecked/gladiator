@@ -3,11 +3,15 @@ package com.mygdx.game;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -23,9 +27,18 @@ public class Berserk extends Game {
 	private Stage stage;
 	private BerserkGame game;
 	private boolean buttonClicked;
-	private Character character;
-	private EnemyCharacter enemyCharacter;
+	private static Character character;
+	private static EnemyCharacter enemyCharacter;
 	private KeybordAdapter inputProcessor = new KeybordAdapter();
+
+
+	public static Character getCharacter() {
+		return character;
+	}
+
+	public static EnemyCharacter getEnemyCharacter() {
+		return enemyCharacter;
+	}
 
 	private Texture attackTexture;
 
@@ -87,6 +100,10 @@ public class Berserk extends Game {
 		stage.draw();
 
 		if (buttonClicked) {
+			Vector2 characterPosition = new Vector2(character.getX(), character.getY());
+			Vector2 enemyPosition = new Vector2(enemyCharacter.getX(), enemyCharacter.getY());
+
+
 			enemyCharacter.act(Gdx.graphics.getDeltaTime());
 			Gdx.gl.glClearColor(0, 0, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -100,6 +117,7 @@ public class Berserk extends Game {
 			batch.end();
 		}
 	}
+
 
 
 	@Override
