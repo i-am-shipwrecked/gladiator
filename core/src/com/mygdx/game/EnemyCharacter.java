@@ -21,6 +21,10 @@ public class EnemyCharacter extends Actor {
     private Texture attackTexture = new Texture("attack_enemy.png");
     private boolean canMove = true;
     private float attackTimer = 0;
+    private boolean isAttacking = false;
+    private Vector2 originalPosition;
+    private float returnDistance = 0;
+    private boolean returning = false;
 
     public EnemyCharacter(float x, float y, float screenWidth, float screenHeight) {
         enemyTexture = new Texture("enemy.png");
@@ -34,14 +38,16 @@ public class EnemyCharacter extends Actor {
 
         float frameDuration = 0.1f;
         animation = new Animation<Texture>(frameDuration, walkFrames);
+
+        originalPosition = new Vector2(x, y);
     }
 
     @Override
     public void act(float delta) {
         super.act(delta);
+        float newX = getX() + (movingRight ? moveSpeed : -moveSpeed);
 
-        if (canMove) {
-            float newX = getX() + (movingRight ? moveSpeed : -moveSpeed);
+        if (canMove && !returning) {
             if (newX < 0 || newX + getWidth() > screenWidth) {
                 movingRight = !movingRight;
             }
@@ -53,6 +59,10 @@ public class EnemyCharacter extends Actor {
             enemyTexture = attackTexture;
             canMove = false;
             attackTimer = 2.0f;
+
+            // Устанавливаем состояние атаки в true
+            isAttacking = true;
+            returning = false;
         }
 
         if (attackTimer > 0) {
@@ -60,8 +70,25 @@ public class EnemyCharacter extends Actor {
             if (attackTimer <= 0) {
                 canMove = true;
                 enemyTexture = new Texture("enemy.png");
+
+                // Возвращаемся к исходной позиции после атаки
+                isAttacking = false;
+                returning = true;
             }
         }
+
+        if (returning) {
+            returnDistance += moveSpeed * delta;
+            float maxReturnDistance = 2; // Максимальное расстояние для возврата
+
+            if (returnDistance >= maxReturnDistance) {
+                returnDistance = maxReturnDistance;
+                returning = false;
+            }
+
+            setPosition(getX() + returnDistance, getY());
+        }
+
     }
 
     private boolean isNearCharacter() {
@@ -71,14 +98,15 @@ public class EnemyCharacter extends Actor {
         float threshold = 50;
         return distance <= threshold;
     }
+
     public void render(Batch batch) {
-        draw(batch, 1.0f); // В противном случае, отобразите анимацию передвижения
+        draw(batch, 1.0f);
     }
 
     @Override
     public void draw(Batch batch, float parentAlpha) {
         stateTime += Gdx.graphics.getDeltaTime();
-        Texture currentFrame = (attackTimer > 0) ? enemyTexture : animation.getKeyFrame(stateTime, true);
+        Texture currentFrame = (isAttacking) ? enemyTexture : animation.getKeyFrame(stateTime, true);
         batch.draw(currentFrame, getX(), getY());
     }
 
