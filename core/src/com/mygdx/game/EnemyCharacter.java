@@ -104,7 +104,7 @@ public class EnemyCharacter extends Actor {
         Character character = getCharacter();
         Vector2 characterPos = character.getPosition();
         float distance = characterPos.dst(getX(), getY());
-        float threshold = 50;
+        float threshold = 100;
         return distance <= threshold;
     }
 
