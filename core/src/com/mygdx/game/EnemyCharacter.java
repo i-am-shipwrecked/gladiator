@@ -42,16 +42,25 @@ public class EnemyCharacter extends Actor {
         originalPosition = new Vector2(x, y);
     }
 
+    private float moveSpeedX = 1; // Скорость движения по горизонтали
+    private float moveSpeedY = 1; // Скорость движения по вертикали
     @Override
     public void act(float delta) {
         super.act(delta);
-        float newX = getX() + (movingRight ? moveSpeed : -moveSpeed);
 
-        if (canMove && !returning) {
+        if (canMove) {
+            float newX = getX() + (movingRight ? moveSpeedX : -moveSpeedX);
+            float newY = getY() + moveSpeedY;
+
             if (newX < 0 || newX + getWidth() > screenWidth) {
                 movingRight = !movingRight;
             }
-            setPosition(newX, getY());
+
+            if (newY < 0 || newY + getHeight() > screenHeight) {
+                moveSpeedY = -moveSpeedY;
+            }
+
+            setPosition(newX, newY);
         }
 
         if (isNearCharacter() && attackTimer <= 0) {
