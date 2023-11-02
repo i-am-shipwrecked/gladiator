@@ -43,7 +43,6 @@ public class EnemyCharacter extends Actor {
         originalPosition = new Vector2(x, y); // Инициализируем originalPosition
     }
 
-
     private float moveSpeedX = 1; // Скорость движения по горизонтали
     private float moveSpeedY = 1; // Скорость движения по вертикали
     @Override
