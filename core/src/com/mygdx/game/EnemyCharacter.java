@@ -26,6 +26,7 @@ public class EnemyCharacter extends Actor {
     private float returnDistance = 0;
     private boolean returning = false;
 
+
     public EnemyCharacter(float x, float y, float screenWidth, float screenHeight) {
         enemyTexture = new Texture("enemy.png");
         setPosition(x, y);
@@ -39,7 +40,7 @@ public class EnemyCharacter extends Actor {
         float frameDuration = 0.1f;
         animation = new Animation<Texture>(frameDuration, walkFrames);
 
-        originalPosition = new Vector2(x, y);
+        originalPosition = new Vector2(x, y); // Инициализируем originalPosition
     }
 
     private float moveSpeedX = 1; // Скорость движения по горизонтали
@@ -80,23 +81,23 @@ public class EnemyCharacter extends Actor {
                 canMove = true;
                 enemyTexture = new Texture("enemy.png");
 
-                // Возвращаемся к исходной позиции после атаки
+                // Начните возвращение после завершения атаки
                 isAttacking = false;
                 returning = true;
             }
         }
 
         if (returning) {
-            returnDistance += moveSpeed * delta;
-            float maxReturnDistance = 2; // Максимальное расстояние для возврата
+            float returnSpeed = 2; // скорость возврата
 
-            if (returnDistance >= maxReturnDistance) {
-                returnDistance = maxReturnDistance;
+            // движение вправо
+            setPosition(getX() + returnSpeed, getY());
+
+            if (getX() >= originalPosition.x) {
                 returning = false;
             }
-
-            setPosition(getX() + returnDistance, getY());
         }
+
 
     }
 
