@@ -35,15 +35,17 @@ public class EnemyCharacter extends Actor {
 
         Texture textureWalk1 = new Texture("enemy_walk.png");
         Texture textureWalk2 = new Texture("enemy_walk_2.png");
-        Texture[] walkFrames = { textureWalk1, textureWalk2 };
+        Texture[] walkFrames = {textureWalk1, textureWalk2};
 
         float frameDuration = 0.1f;
         animation = new Animation<Texture>(frameDuration, walkFrames);
 
         originalPosition = new Vector2(x, y);
     }
+
     private float moveSpeedX = 1;
     private float moveSpeedY = 1;
+
     @Override
     public void act(float delta) {
         super.act(delta);
