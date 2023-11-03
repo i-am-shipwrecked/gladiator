@@ -40,7 +40,7 @@ public class EnemyCharacter extends Actor {
         float frameDuration = 0.1f;
         animation = new Animation<Texture>(frameDuration, walkFrames);
 
-        originalPosition = new Vector2(x, y);
+        originalPosition = new Vector2(x, y); // Инициализируем originalPosition
     }
 
     private float moveSpeedX = 1;
@@ -80,7 +80,6 @@ public class EnemyCharacter extends Actor {
             if (attackTimer <= 0) {
                 canMove = true;
                 enemyTexture = new Texture("enemy.png");
-
                 isAttacking = false;
                 returning = true;
             }
@@ -88,7 +87,6 @@ public class EnemyCharacter extends Actor {
 
         if (returning) {
             float returnSpeed = 2;
-
             setPosition(getX() + returnSpeed, getY());
 
             if (getX() >= originalPosition.x) {
