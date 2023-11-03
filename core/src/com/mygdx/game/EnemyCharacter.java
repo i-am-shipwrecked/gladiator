@@ -14,7 +14,7 @@ public class EnemyCharacter extends Actor {
     private Texture enemyTexture;
     private float screenWidth;
     private float screenHeight;
-    private float moveSpeed = 1; // Скорость движения врага
+    private float moveSpeed = 1;
     private Animation<Texture> animation;
     private float stateTime = 0;
     private boolean movingRight = true;
@@ -35,7 +35,7 @@ public class EnemyCharacter extends Actor {
 
         Texture textureWalk1 = new Texture("enemy_walk.png");
         Texture textureWalk2 = new Texture("enemy_walk_2.png");
-        Texture[] walkFrames = { textureWalk1, textureWalk2 };
+        Texture[] walkFrames = {textureWalk1, textureWalk2};
 
         float frameDuration = 0.1f;
         animation = new Animation<Texture>(frameDuration, walkFrames);
@@ -43,8 +43,9 @@ public class EnemyCharacter extends Actor {
         originalPosition = new Vector2(x, y); // Инициализируем originalPosition
     }
 
-    private float moveSpeedX = 1; // Скорость движения по горизонтали
-    private float moveSpeedY = 1; // Скорость движения по вертикали
+    private float moveSpeedX = 1;
+    private float moveSpeedY = 1;
+
     @Override
     public void act(float delta) {
         super.act(delta);
@@ -68,9 +69,8 @@ public class EnemyCharacter extends Actor {
             System.out.println("Is working");
             enemyTexture = attackTexture;
             canMove = false;
-            attackTimer = 2.0f;
+            attackTimer = 0.5f;
 
-            // Устанавливаем состояние атаки в true
             isAttacking = true;
             returning = false;
         }
@@ -80,17 +80,13 @@ public class EnemyCharacter extends Actor {
             if (attackTimer <= 0) {
                 canMove = true;
                 enemyTexture = new Texture("enemy.png");
-
-                // Начните возвращение после завершения атаки
                 isAttacking = false;
                 returning = true;
             }
         }
 
         if (returning) {
-            float returnSpeed = 2; // скорость возврата
-
-            // движение вправо
+            float returnSpeed = 2;
             setPosition(getX() + returnSpeed, getY());
 
             if (getX() >= originalPosition.x) {
