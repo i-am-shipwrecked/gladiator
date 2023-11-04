@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
@@ -11,7 +12,7 @@ import static com.mygdx.game.Berserk.getCharacter;
 
 
 public class EnemyCharacter extends Actor {
-    private Texture enemyTexture;
+    private static Texture enemyTexture;
     private float screenWidth;
     private float screenHeight;
     private float moveSpeed = 1;
@@ -43,8 +44,16 @@ public class EnemyCharacter extends Actor {
         originalPosition = new Vector2(x, y); // Инициализируем originalPosition
     }
 
+    public static Texture getEnemyTexture() {
+        return enemyTexture;
+    }
+
     private float moveSpeedX = 1;
     private float moveSpeedY = 1;
+    public Rectangle getBounds() {
+        return new Rectangle(getX(), getY(), getWidth(), getHeight());
+    }
+
 
     @Override
     public void act(float delta) {
@@ -66,7 +75,11 @@ public class EnemyCharacter extends Actor {
         }
 
         if (isNearCharacter() && attackTimer <= 0) {
-            System.out.println("Is working");
+            Character character = Berserk.getCharacter();
+            if (getBounds().overlaps(character.getBounds())) {
+                Berserk.endGame();
+            }
+
             enemyTexture = attackTexture;
             canMove = false;
             attackTimer = 0.5f;
@@ -93,8 +106,6 @@ public class EnemyCharacter extends Actor {
                 returning = false;
             }
         }
-
-
     }
 
     private boolean isNearCharacter() {
@@ -104,6 +115,7 @@ public class EnemyCharacter extends Actor {
         float threshold = 100;
         return distance <= threshold;
     }
+
 
     public void render(Batch batch) {
         draw(batch, 1.0f);

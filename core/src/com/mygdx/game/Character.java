@@ -8,6 +8,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
+import static com.mygdx.game.Berserk.*;
+
 public class Character extends Actor {
     private Texture texture;
     private Texture enemyTexture;
@@ -19,13 +21,14 @@ public class Character extends Actor {
     private Animation<Texture> animation;
     private float stateTime = 0;
     private Vector2 previousPosition = new Vector2();
-
     private float animationTime = 0.0f;
     private float animationDuration = 0.1f;
     private boolean animationTriggered = false;
     private KeybordAdapter inputProcessor;
     private Texture attackTexture;
     private Texture healthTexture;
+    private int attackCount = 0;
+
 
     public Character(float x, float y, float screenWidth, float screenHeight, KeybordAdapter inputProcessor) {
         this.inputProcessor = inputProcessor;
@@ -46,6 +49,7 @@ public class Character extends Actor {
     }
 
 
+
     public void render(Batch batch) {
         if (animationTriggered) {
             animationTime += Gdx.graphics.getDeltaTime();
@@ -62,7 +66,7 @@ public class Character extends Actor {
 
         if (inputProcessor.isEnterPressed()) {
             texture = attackTexture;
-            System.out.println("attack");
+
         }
 
         batch.draw(texture, position.x, position.y);
@@ -73,9 +77,14 @@ public class Character extends Actor {
     }
 
 
-
     public void dispose() {
+        attackTexture.dispose();
         texture.dispose();
+    }
+    private boolean isCollidingWithEnemy(EnemyCharacter enemyCharacter) {
+        Rectangle characterRect = new Rectangle(position.x, position.y, getWidth(), getHeight());
+        Rectangle enemyRect = new Rectangle(enemyCharacter.getX(), enemyCharacter.getY(), enemyCharacter.getWidth(), enemyCharacter.getHeight());
+        return characterRect.overlaps(enemyRect);
     }
 
     public void moveTo(Vector2 direction) {
@@ -95,6 +104,12 @@ public class Character extends Actor {
     public Vector2 getPosition() {
         return position;
     }
+
+    public Rectangle getBounds() {
+        return new Rectangle(position.x, position.y, texture.getWidth(), texture.getHeight());
+    }
+
+
 }
 
 

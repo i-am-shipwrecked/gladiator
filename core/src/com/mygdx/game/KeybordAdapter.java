@@ -4,6 +4,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 
+import static com.mygdx.game.Berserk.getCharacter;
+
 public class KeybordAdapter extends InputAdapter {
     private boolean leftPressed;
     private boolean rightPressed;
@@ -12,6 +14,8 @@ public class KeybordAdapter extends InputAdapter {
     private boolean enterPressed = false;
 
     private final Vector2 direction = new Vector2();
+
+
 
     @Override
     public boolean keyDown(int keycode) {
@@ -23,6 +27,7 @@ public class KeybordAdapter extends InputAdapter {
 
         return false;
     }
+
 
     @Override
     public boolean keyUp(int keycode) {
@@ -47,5 +52,6 @@ public class KeybordAdapter extends InputAdapter {
     public boolean isEnterPressed() {
         return enterPressed;
     }
+
 }
 
