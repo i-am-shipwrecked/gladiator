@@ -100,25 +100,27 @@ public class Berserk extends Game {
 		stage.draw();
 
 		if (buttonClicked) {
-			Vector2 characterPosition = new Vector2(character.getX(), character.getY());
-			Vector2 enemyPosition = new Vector2(enemyCharacter.getX(), enemyCharacter.getY());
+			float deltaTime = Gdx.graphics.getDeltaTime();
 
+			enemyCharacter.act(deltaTime); // Обновление состояния врага
+			character.moveTo(inputProcessor.getDirection()); // Обновление позиции персонажа
 
-			enemyCharacter.act(Gdx.graphics.getDeltaTime());
 			Gdx.gl.glClearColor(0, 0, 0, 1);
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 			batch.begin();
 			batch.draw(img, 0, 0, screenWidth, screenHeight);
 			enemyCharacter.render(batch);
-			character.render(batch);
-			character.moveTo(inputProcessor.getDirection());
-
+			character.render(batch); // Убедитесь, что этот метод отвечает за рендеринг текстуры и анимацию, если она активирована
 			batch.end();
 		}
 	}
 
-
+	public static void endGame() {
+		// Здесь код для окончания игры, возможно, показ сообщения и выход из приложения
+		System.out.println("You defeated the enemy!");
+		Gdx.app.exit(); // Пример выхода из приложения
+	}
 
 	@Override
 	public void dispose() {
