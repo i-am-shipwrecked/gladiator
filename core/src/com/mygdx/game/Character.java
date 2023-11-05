@@ -78,6 +78,7 @@ public class Character extends Actor {
 
 
     public void dispose() {
+
         attackTexture.dispose();
         texture.dispose();
     }
