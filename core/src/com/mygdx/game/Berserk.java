@@ -2,6 +2,7 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.LifecycleListener;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -18,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.Timer;
 
 public class Berserk extends Game {
 	private SpriteBatch batch;
@@ -30,6 +32,11 @@ public class Berserk extends Game {
 	private static Character character;
 	private static EnemyCharacter enemyCharacter;
 	private KeybordAdapter inputProcessor = new KeybordAdapter();
+	private static boolean isGameOver = false; // флаг окончания игры
+	private Texture darkOverlay; // текстура затемнения
+	private Texture gameOverTexture; // текстура конца игры
+	private float overlayAlpha = 0f; // текущая прозрачность затемнения
+	private SpriteBatch endGameBatch;
 
 
 	public static Character getCharacter() {
@@ -64,7 +71,7 @@ public class Berserk extends Game {
 		Texture hoverTexture = new Texture("play_hover.png");
 		TextureRegionDrawable normalDrawable = new TextureRegionDrawable(new TextureRegion(normalTexture));
 		TextureRegionDrawable hoverDrawable = new TextureRegionDrawable(new TextureRegion(hoverTexture));
-		ImageButton button = new ImageButton(normalDrawable, hoverDrawable);
+		final ImageButton button = new ImageButton(normalDrawable, hoverDrawable);
 		button.setPosition(screenWidth / 2 - button.getWidth() / 2, screenHeight / 2 - button.getHeight() / 2);
 
 		stage = new Stage();
@@ -80,54 +87,67 @@ public class Berserk extends Game {
 				enemyCharacter = new EnemyCharacter(1100, 0, 1100, 100);
 				Gdx.input.setInputProcessor(inputProcessor);
 				System.out.println("characters are loaded");
+				button.remove();
 			}
 		});
+		gameOverTexture = new Texture("game_over.png"); // Загрузите текстуру здесь
 	}
 
 
 	@Override
 	public void render() {
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		batch.begin();
-		float x = 0;
-		float y = 0;
-		batch.draw(img, x, y, screenWidth, screenHeight);
-		batch.end();
-
-		stage.act();
-		stage.draw();
-
-		if (buttonClicked) {
-			float deltaTime = Gdx.graphics.getDeltaTime();
-
-			enemyCharacter.act(deltaTime); // Обновление состояния врага
-			character.moveTo(inputProcessor.getDirection()); // Обновление позиции персонажа
-
-			Gdx.gl.glClearColor(0, 0, 0, 1);
-			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+		if (!isGameOver) {
+			ScreenUtils.clear(0, 0, 0, 1);
 			batch.begin();
 			batch.draw(img, 0, 0, screenWidth, screenHeight);
-			enemyCharacter.render(batch);
-			character.render(batch); // Убедитесь, что этот метод отвечает за рендеринг текстуры и анимацию, если она активирована
 			batch.end();
+			stage.act(Math.min(Gdx.graphics.getDeltaTime(), 10 / 1f));
+			stage.draw();
+			if (buttonClicked) {
+				float deltaTime = Gdx.graphics.getDeltaTime();
+				enemyCharacter.act(deltaTime);
+				character.moveTo(inputProcessor.getDirection());
+				batch.begin();
+				enemyCharacter.render(batch);
+				character.render(batch);
+				batch.end();
+			}
+		} else {
+			renderEndGameScreen();
 		}
 	}
 
+	private void renderEndGameScreen() {
+		if (endGameBatch == null) {
+			darkOverlay = new Texture("dark_overlay.jpg");
+			gameOverTexture = new Texture("game_over.png");
+			endGameBatch = new SpriteBatch();
+		}
+		Gdx.gl.glClearColor(0, 0, 0, 0.5f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+		endGameBatch.begin();
+		endGameBatch.draw(darkOverlay, 0, 0, screenWidth, screenHeight);
+		endGameBatch.draw(gameOverTexture, (screenWidth - gameOverTexture.getWidth()) / 2f,
+				(screenHeight - gameOverTexture.getHeight()) / 2f);
+		endGameBatch.end();
+	}
+
 	public static void endGame() {
-		// Здесь код для окончания игры, возможно, показ сообщения и выход из приложения
-		System.out.println("You defeated the enemy!");
-		Gdx.app.exit(); // Пример выхода из приложения
+		isGameOver = true;
+		// Дополнительная логика для остановки игры может быть здесь
 	}
 
 	@Override
 	public void dispose() {
 		batch.dispose();
-		enemyCharacter.dispose();
-		character.dispose();
 		img.dispose();
 		stage.dispose();
+		if (endGameBatch != null) {
+			endGameBatch.dispose();
+			darkOverlay.dispose();
+			gameOverTexture.dispose();
+		}
+		// ... освобождение других ресурсов ...
 	}
+
 }
