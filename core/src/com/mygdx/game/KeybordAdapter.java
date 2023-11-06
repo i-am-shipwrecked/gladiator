@@ -4,8 +4,6 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 
-import static com.mygdx.game.Berserk.getCharacter;
-
 public class KeybordAdapter extends InputAdapter {
     private boolean leftPressed;
     private boolean rightPressed;

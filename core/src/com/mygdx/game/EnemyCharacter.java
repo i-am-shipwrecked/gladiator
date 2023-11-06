@@ -41,7 +41,7 @@ public class EnemyCharacter extends Actor {
         float frameDuration = 0.1f;
         animation = new Animation<Texture>(frameDuration, walkFrames);
 
-        originalPosition = new Vector2(x, y); // Инициализируем originalPosition
+        originalPosition = new Vector2(x, y);
     }
 
     public static Texture getEnemyTexture() {
