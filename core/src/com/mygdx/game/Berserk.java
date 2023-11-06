@@ -134,7 +134,6 @@ public class Berserk extends Game {
 
 	public static void endGame() {
 		isGameOver = true;
-		// Дополнительная логика для остановки игры может быть здесь
 	}
 
 	@Override
@@ -147,7 +146,6 @@ public class Berserk extends Game {
 			darkOverlay.dispose();
 			gameOverTexture.dispose();
 		}
-		// ... освобождение других ресурсов ...
 	}
 
 }
