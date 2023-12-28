@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import audioManager.MusicController;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.LifecycleListener;
@@ -37,7 +38,7 @@ public class Berserk extends Game {
 	private Texture gameOverTexture; // текстура конца игры
 	private float overlayAlpha = 0f; // текущая прозрачность затемнения
 	private SpriteBatch endGameBatch;
-
+	private MusicController musicController;
 
 	public static Character getCharacter() {
 		return character;
@@ -51,6 +52,8 @@ public class Berserk extends Game {
 
 	@Override
 	public void create() {
+		musicController = new MusicController();
+		musicController.play();
 		batch = new SpriteBatch();
 		img = new Texture("arena.jpg");
 
@@ -141,6 +144,9 @@ public class Berserk extends Game {
 		batch.dispose();
 		img.dispose();
 		stage.dispose();
+		if (musicController != null) {
+			musicController.dispose();
+		}
 		if (endGameBatch != null) {
 			endGameBatch.dispose();
 			darkOverlay.dispose();
