@@ -1,4 +1,4 @@
-package audioManager;
+package audio_manager;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;

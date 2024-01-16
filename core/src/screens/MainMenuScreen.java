@@ -1,9 +1,10 @@
-package com.mygdx.game;
+package screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mygdx.game.BerserkGame;
 
 public class MainMenuScreen implements Screen {
     private BerserkGame game;
