@@ -77,7 +77,7 @@ public class EnemyCharacter extends Actor {
         if (isNearCharacter() && attackTimer <= 0) {
             Character character = Berserk.getCharacter();
             if (getBounds().overlaps(character.getBounds())) {
-                Berserk.endGame();
+                character.takeDamage();
             }
 
             enemyTexture = attackTexture;
