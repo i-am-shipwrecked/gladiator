@@ -10,7 +10,6 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class Character extends Actor {
     private Texture texture;
-    private Texture enemyTexture;
     private Texture textureWalk1;
     private Texture textureWalk2;
     private Vector2 position = new Vector2();
@@ -22,7 +21,7 @@ public class Character extends Actor {
     private float animationTime = 0.0f;
     private float animationDuration = 0.1f;
     private boolean animationTriggered = false;
-    private KeybordAdapter inputProcessor;
+    private KeyboardAdapter inputProcessor;
     private Texture attackTexture;
     private Texture fullHpTexture;
     private Texture halfHpTexture;
@@ -30,7 +29,7 @@ public class Character extends Actor {
     private int hitCount = 0;
 
 
-    public Character(float x, float y, float screenWidth, float screenHeight, KeybordAdapter inputProcessor) {
+    public Character(float x, float y, float screenWidth, float screenHeight, KeyboardAdapter inputProcessor) {
         this.inputProcessor = inputProcessor;
         texture = new Texture("me.png");
         textureWalk1 = new Texture("me_walk1.png");
