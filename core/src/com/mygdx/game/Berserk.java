@@ -3,24 +3,17 @@ package com.mygdx.game;
 import audioManager.MusicController;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.LifecycleListener;
-import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.Timer;
 
 public class Berserk extends Game {
 	private SpriteBatch batch;
@@ -33,10 +26,10 @@ public class Berserk extends Game {
 	private static Character character;
 	private static EnemyCharacter enemyCharacter;
 	private KeybordAdapter inputProcessor = new KeybordAdapter();
-	private static boolean isGameOver = false; // флаг окончания игры
-	private Texture darkOverlay; // текстура затемнения
-	private Texture gameOverTexture; // текстура конца игры
-	private float overlayAlpha = 0f; // текущая прозрачность затемнения
+	private static boolean isGameOver = false;
+	private Texture darkOverlay;
+	private Texture gameOverTexture;
+	private float overlayAlpha = 0f;
 	private SpriteBatch endGameBatch;
 	private MusicController musicController;
 
@@ -93,7 +86,7 @@ public class Berserk extends Game {
 				button.remove();
 			}
 		});
-		gameOverTexture = new Texture("game_over.png"); // Загрузите текстуру здесь
+		gameOverTexture = new Texture("game_over.png");
 	}
 
 

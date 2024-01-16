@@ -8,8 +8,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import static com.mygdx.game.Berserk.*;
-
 public class Character extends Actor {
     private Texture texture;
     private Texture enemyTexture;
