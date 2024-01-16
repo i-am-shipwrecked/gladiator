@@ -83,3 +83,4 @@ If you'd like to contribute to Berserk, please follow these steps:
 3. Make your changes and submit a pull request.
 
 ---
+![DALL·E 2024-01-16 19 46 15 - A wide pixel art illustration depicting gladiators in an ancient Roman arena  The image should have a retro video game aesthetic, reminiscent of class](https://github.com/i-am-shipwrecked/gladiator/assets/80786579/00bc1b9f-d4a4-4d87-87f3-f056de601c2f)
