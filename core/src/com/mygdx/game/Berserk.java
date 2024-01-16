@@ -1,6 +1,9 @@
 package com.mygdx.game;
 
-import audioManager.MusicController;
+import adapters.KeyboardAdapter;
+import audio_manager.MusicController;
+import characters.Character;
+import characters.EnemyCharacter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;

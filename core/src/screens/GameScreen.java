@@ -1,6 +1,7 @@
-package com.mygdx.game;
+package screens;
 
 import com.badlogic.gdx.Screen;
+import com.mygdx.game.BerserkGame;
 
 public class GameScreen implements Screen {
 
