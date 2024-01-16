@@ -15,7 +15,6 @@ public class EnemyCharacter extends Actor {
     private static Texture enemyTexture;
     private float screenWidth;
     private float screenHeight;
-    private float moveSpeed = 1;
     private Animation<Texture> animation;
     private float stateTime = 0;
     private boolean movingRight = true;
@@ -24,10 +23,9 @@ public class EnemyCharacter extends Actor {
     private float attackTimer = 0;
     private boolean isAttacking = false;
     private Vector2 originalPosition;
-    private float returnDistance = 0;
     private boolean returning = false;
-
-
+    private float moveSpeedX = 1;
+    private float moveSpeedY = 1;
     public EnemyCharacter(float x, float y, float screenWidth, float screenHeight) {
         enemyTexture = new Texture("enemy.png");
         setPosition(x, y);
@@ -48,8 +46,6 @@ public class EnemyCharacter extends Actor {
         return enemyTexture;
     }
 
-    private float moveSpeedX = 1;
-    private float moveSpeedY = 1;
     public Rectangle getBounds() {
         return new Rectangle(getX(), getY(), getWidth(), getHeight());
     }
@@ -77,7 +73,7 @@ public class EnemyCharacter extends Actor {
         if (isNearCharacter() && attackTimer <= 0) {
             Character character = Berserk.getCharacter();
             if (getBounds().overlaps(character.getBounds())) {
-                Berserk.endGame();
+                character.takeDamage();
             }
 
             enemyTexture = attackTexture;

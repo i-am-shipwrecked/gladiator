@@ -4,16 +4,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.math.Vector2;
 
-public class KeybordAdapter extends InputAdapter {
+public class KeyboardAdapter extends InputAdapter {
     private boolean leftPressed;
     private boolean rightPressed;
     private boolean upPressed;
     private boolean downPressed;
     private boolean enterPressed = false;
-
     private final Vector2 direction = new Vector2();
-
-
 
     @Override
     public boolean keyDown(int keycode) {
@@ -22,10 +19,8 @@ public class KeybordAdapter extends InputAdapter {
         if (keycode == Input.Keys.W) upPressed = true;
         if (keycode == Input.Keys.S) downPressed = true;
         if (keycode == Input.Keys.ENTER) enterPressed = true;
-
         return false;
     }
-
 
     @Override
     public boolean keyUp(int keycode) {
@@ -34,7 +29,6 @@ public class KeybordAdapter extends InputAdapter {
         if (keycode == Input.Keys.W) upPressed = false;
         if (keycode == Input.Keys.S) downPressed = false;
         if (keycode == Input.Keys.ENTER) enterPressed = false;
-
         return false;
     }
 

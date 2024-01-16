@@ -8,11 +8,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import static com.mygdx.game.Berserk.*;
-
 public class Character extends Actor {
     private Texture texture;
-    private Texture enemyTexture;
     private Texture textureWalk1;
     private Texture textureWalk2;
     private Vector2 position = new Vector2();
@@ -24,19 +21,23 @@ public class Character extends Actor {
     private float animationTime = 0.0f;
     private float animationDuration = 0.1f;
     private boolean animationTriggered = false;
-    private KeybordAdapter inputProcessor;
+    private KeyboardAdapter inputProcessor;
     private Texture attackTexture;
-    private Texture healthTexture;
-    private int attackCount = 0;
+    private Texture fullHpTexture;
+    private Texture halfHpTexture;
+    private Texture lowHpTexture;
+    private int hitCount = 0;
 
 
-    public Character(float x, float y, float screenWidth, float screenHeight, KeybordAdapter inputProcessor) {
+    public Character(float x, float y, float screenWidth, float screenHeight, KeyboardAdapter inputProcessor) {
         this.inputProcessor = inputProcessor;
         texture = new Texture("me.png");
         textureWalk1 = new Texture("me_walk1.png");
         textureWalk2 = new Texture("me_walk2.png");
         attackTexture = new Texture("attack.png");
-        healthTexture = new Texture("my_full_hp.png");
+        fullHpTexture = new Texture("my_full_hp.png");
+        halfHpTexture = new Texture("me_half_hp.png");
+        lowHpTexture = new Texture("me_low_hp.png");
         this.position.set(x, y);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
@@ -73,7 +74,20 @@ public class Character extends Actor {
 
         float healthTextureX = 10;
         float healthTextureY = 650;
-        batch.draw(healthTexture, healthTextureX, healthTextureY);
+        batch.draw(fullHpTexture, healthTextureX, healthTextureY);
+
+        switch (hitCount) {
+            case 0:
+                batch.draw(fullHpTexture, healthTextureX, healthTextureY);
+                break;
+            case 1:
+                batch.draw(halfHpTexture, healthTextureX, healthTextureY);
+                break;
+            case 2:
+                batch.draw(lowHpTexture, healthTextureX, healthTextureY);
+                Berserk.endGame();
+                break;
+        }
     }
 
 
@@ -109,6 +123,12 @@ public class Character extends Actor {
         return new Rectangle(position.x, position.y, texture.getWidth(), texture.getHeight());
     }
 
+    public void onHit() {
+        hitCount++;
+    }
+    public void takeDamage() {
+        hitCount++;
+    }
 
 }
 
