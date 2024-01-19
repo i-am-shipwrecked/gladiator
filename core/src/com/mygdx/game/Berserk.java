@@ -34,6 +34,10 @@ public class Berserk extends Game {
     private Texture gameOverTexture;
     private SpriteBatch endGameBatch;
     private MusicController musicController;
+    private boolean isSoundEnabled = true;
+    private Texture soundOnTexture;
+    private Texture soundOffTexture;
+    private ImageButton soundButton;
 
     public static Character getCharacter() {
         return character;
@@ -54,7 +58,6 @@ public class Berserk extends Game {
         Gdx.graphics.setCursor(Gdx.graphics.newCursor(cursorPixmap, 0, 0));
         cursorPixmap.dispose();
 
-
         screenWidth = Gdx.graphics.getWidth();
         screenHeight = Gdx.graphics.getHeight();
 
@@ -63,6 +66,32 @@ public class Berserk extends Game {
 
         game = new BerserkGame();
 
+        soundOnTexture = new Texture("sound_on.png");
+        soundOffTexture = new Texture("sound_off.png");
+
+        TextureRegionDrawable soundOnDrawable = new TextureRegionDrawable(new TextureRegion(soundOnTexture));
+        TextureRegionDrawable soundOffDrawable = new TextureRegionDrawable(new TextureRegion(soundOffTexture));
+        soundButton = new ImageButton(soundOnDrawable, soundOffDrawable);
+
+        soundButton.setPosition(20, 600);
+
+        float buttonWidth = 100f;
+        float buttonHeight = 50f;
+        soundButton.setSize(buttonWidth, buttonHeight);
+
+        stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
+
+        stage.addActor(soundButton);
+        updateSoundButtonImage();
+
+        soundButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                toggleSound();
+            }
+        });
+
         Texture normalTexture = new Texture("play.png");
         Texture hoverTexture = new Texture("play_hover.png");
         TextureRegionDrawable normalDrawable = new TextureRegionDrawable(new TextureRegion(normalTexture));
@@ -70,7 +99,6 @@ public class Berserk extends Game {
         final ImageButton button = new ImageButton(normalDrawable, hoverDrawable);
         button.setPosition(screenWidth / 2 - button.getWidth() / 2, screenHeight / 2 - button.getHeight() / 2);
 
-        stage = new Stage();
         stage.addActor(button);
         stage.getViewport().update(screenWidth, screenHeight, true);
         Gdx.input.setInputProcessor(stage);
@@ -84,8 +112,10 @@ public class Berserk extends Game {
                 Gdx.input.setInputProcessor(inputProcessor);
                 System.out.println("characters are loaded");
                 button.remove();
+                soundButton.remove();
             }
         });
+
         gameOverTexture = new Texture("game_over.png");
     }
 
@@ -145,6 +175,29 @@ public class Berserk extends Game {
             darkOverlay.dispose();
             gameOverTexture.dispose();
         }
+        soundOnTexture.dispose();
+        soundOffTexture.dispose();
     }
+
+    private void toggleSound() {
+        isSoundEnabled = !isSoundEnabled;
+
+        if (isSoundEnabled) {
+            musicController.play();
+            soundButton.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(soundOnTexture));
+        } else {
+            musicController.pause();
+            soundButton.getStyle().imageUp = new TextureRegionDrawable(new TextureRegion(soundOffTexture));
+        }
+    }
+
+    private void updateSoundButtonImage() {
+        if (isSoundEnabled) {
+            soundButton.getImage().setDrawable(new TextureRegionDrawable(new TextureRegion(soundOnTexture)));
+        } else {
+            soundButton.getImage().setDrawable(new TextureRegionDrawable(new TextureRegion(soundOffTexture)));
+        }
+    }
+
 
 }
