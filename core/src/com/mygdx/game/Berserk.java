@@ -73,7 +73,11 @@ public class Berserk extends Game {
         TextureRegionDrawable soundOffDrawable = new TextureRegionDrawable(new TextureRegion(soundOffTexture));
         soundButton = new ImageButton(soundOnDrawable, soundOffDrawable);
 
-        soundButton.setPosition(screenWidth - soundButton.getWidth() - 20, 20);
+        soundButton.setPosition(20, 600);
+
+        float buttonWidth = 100f;
+        float buttonHeight = 50f;
+        soundButton.setSize(buttonWidth, buttonHeight);
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
@@ -108,6 +112,7 @@ public class Berserk extends Game {
                 Gdx.input.setInputProcessor(inputProcessor);
                 System.out.println("characters are loaded");
                 button.remove();
+                soundButton.remove();
             }
         });
 
