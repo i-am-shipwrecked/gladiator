@@ -1,4 +1,4 @@
-# Gladiator
+# Gladiator 🗡️
 
 ## Table of Contents
 - [Description](#description)
@@ -11,7 +11,7 @@
 
 ## Description
 
-Berserk is a game project built using the LibGDX game development framework. This README provides information on setting up and building the project.
+Gladiator is a game project built using the LibGDX game development framework. This README provides information on setting up and building the project.
 
 ### Project Structure
 
